@@ -1,10 +1,12 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { MongoClient } from 'mongodb';
+import path from 'path';
 
 const app = express();
 
-app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, '/build')))
+app.use(express.json());
 
 const withDB = async ( operations, res ) => {
 
@@ -52,6 +54,7 @@ app.get('/api/members/:name', async (req, res) => {
 
 });
 
+/*
 app.post('/api/threat/:name/threat-level', async (req, res) => {
 
     withDB(async (db) => {
@@ -93,5 +96,10 @@ app.post('/api/threat/:name/add-comment', async (req, res) => {
     }, res);
 
 });
+*/
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/build/index.html'));
+})
 
 app.listen(8080, () => console.log('Listening on port 8080'));
