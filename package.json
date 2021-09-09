@@ -2,7 +2,7 @@
   "name": "tva-app-backend",
   "version": "1.0.0",
   "description": "",
-  "type": "commonjs",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "start": "npx nodemon --exec npx babel-node src/server.js",
