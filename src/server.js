@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import { MongoClient, ObjectID } from 'mongodb';
 import moment from 'moment';
 import path from 'path';
+import e from 'express';
 
 require('dotenv').config();
 
@@ -10,11 +11,10 @@ var mongoose = require('mongoose');
 
 const app = express();
 
-
-app.use(express.static(path.join(__dirname, '/build')))
 app.use(express.json());
 
-var dbUrl = process.env.DB_URL;
+const dbUrl = process.env.DB_URL;
+const port = process.env.PORT || 5000;
 
 var Member = mongoose.model('Member', {
     position: String,
@@ -175,8 +175,18 @@ app.get('*', (req, res) => {
 })
 */
 
-app.get('/', (req, res) => {
-    res.json("Our build will succeed!");
-});
 
-var server = app.listen(5000, () => console.log('Listening on port ' + server.address().port));
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../client/build')));
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+    });
+}
+else {
+    app.get('/', (req, res) => {
+        res.send('API running');
+    });
+}
+
+
+var server = app.listen(port, () => console.log('Listening on port ' + server.address().port));
