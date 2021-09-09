@@ -2,7 +2,7 @@
   "name": "tva-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "https://tva-app.herokuapp.com/",
   "proxy": "http://localhost:5000/",
   "dependencies": {
     "@material-ui/core": "^4.11.4",
