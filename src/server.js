@@ -1,9 +1,9 @@
 import express from 'express';
 import path from 'path';
+import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 dotenv.config();
 
-var mongoose = require('mongoose');
 
 const app = express();
 
