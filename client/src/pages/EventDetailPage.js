@@ -9,6 +9,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import Typical from 'react-typical';
 import moment from 'moment';
 
 
@@ -18,7 +19,7 @@ const EventDetailPage = ({ match }) => {
     
     const code = match.params.code;
 
-    const [eventInfo, setEventInfo] = useState({code: '', date: '', pageTitle: '', titleImg: '', introText: '', bodyImg: '', notableChange: []});
+    const [eventInfo, setEventInfo] = useState({code: '', date: '', pageTitle: '', titleImg: '', introText: '', changedText: '', originalText: '', scenarioText: '', bodyImg: '', notableChange: []});
 
     useEffect(() => {
 
@@ -55,7 +56,13 @@ const EventDetailPage = ({ match }) => {
                 <Grid container style={{paddingTop: '32px', paddingBottom: '32px'}}>
                     <Grid item xs={12} sm={6}>
                         <Typography variant="body1" component="h2" className="pageHeader" style={{textAlign:'left', lineHeight: '2.0'}} gutterBottom>
-                            {eventInfo.introText}
+                            {eventInfo.introText} 
+                        </Typography>
+                        <Typography variant="body1" component="h2" className="pageHeader" style={{textAlign:'left', lineHeight: '2.0'}} gutterBottom>
+                            {eventInfo.scenarioText} <Typical steps={[eventInfo.originalText, 2000, eventInfo.changedText, 1000]} loop={1} wrapper="span"/> 
+                        </Typography>
+                        <Typography variant="body1" component="h2" className="pageHeader" style={{textAlign:'left', lineHeight: '2.0'}} gutterBottom>
+                            {eventInfo.bodyText}
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -70,7 +77,7 @@ const EventDetailPage = ({ match }) => {
                 <Grid container style={{paddingTop: '32px', paddingBottom: '32px'}}>
                     <Grid item xs={12} sm={6}>
                         <div className="pageImage" style={{paddingTop: '32px', paddingBottom: '32px'}}>
-                            <img src={eventInfo.bodyImg} alt="Captain Carter flipping a truck" style={{width:'90%'}}></img>
+                            <img src={eventInfo.bodyImg} alt={eventInfo.pageTitle} style={{width:'90%'}}></img>
                         </div>
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -82,6 +89,9 @@ const EventDetailPage = ({ match }) => {
                     </Grid>
                 </Grid>   
                 
+                <Typography variant="body1" component="h2" className="pageHeader" style={{textAlign:'left', lineHeight: '2.0'}} gutterBottom>
+                    Some info taken from Marvel Cinematic Universe Wiki pages
+                </Typography>
             </Container>
             
             {/* <ThreatLevelSection threatName={name} threatLevel={threatInfo.threatLevel} setThreatInfo={setThreatInfo}/>

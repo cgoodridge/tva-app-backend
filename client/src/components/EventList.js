@@ -35,6 +35,7 @@ import moment from 'moment';
       align: 'left',
       format: (value) => value.toLocaleString('en-US'),
     },
+    
   ];
   
 
@@ -56,6 +57,9 @@ const EventList = ({ nexusEvents }) => (
                   {column.label}
                 </TableCell>
               ))}
+                <TableCell>
+                  Actions
+                </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -74,13 +78,13 @@ const EventList = ({ nexusEvents }) => (
                       </TableCell>
                     );
                   })}
-
-                  <Link key={key} to={`/event/${row['code']}`} >
-                    <Button variant="outlined" size="small" color="primary">
-                      View Event
-                    </Button>
-                  </Link>
-
+                  <TableCell> 
+                    <Link key={key} to={`/event/${row['code']}`} >
+                      <Button variant="outlined" size="small" color="primary">
+                        View Event
+                      </Button>
+                    </Link>
+                  </TableCell>
                 </TableRow>
               );
             })}
