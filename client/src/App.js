@@ -49,7 +49,7 @@ function App() {
             </Switch>
           </main>
           <footer>
-            <p> &copy; Copyright TVA &infin; &infin; || Note: This is fan portfoltio project and is not affiliated with Marvel Studios.</p>
+            <p> &copy; Copyright TVA &infin; &infin; || Note: This is a fan portfoltio project and is not affiliated with Marvel Studios.</p>
           </footer>
         </ThemeProvider>
       </div>

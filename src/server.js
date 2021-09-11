@@ -36,6 +36,7 @@ var EventDetails = mongoose.model('EventDetails', {
     introText: String,
     bodyText: String,
     changedText: String,
+    extraText: String,
     originalText: String,
     scenarioText: String,
     bodyImgURL: String,
