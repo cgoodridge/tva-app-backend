@@ -59,7 +59,7 @@ const EventDetailPage = ({ match }) => {
                             {eventInfo.introText} 
                         </Typography>
                         <Typography variant="body1" component="h2" className="pageHeader" style={{textAlign:'left', lineHeight: '2.0'}} gutterBottom>
-                            {eventInfo.scenarioText} <Typical steps={[eventInfo.originalText, 5000, eventInfo.changedText, 3000, eventInfo.extraText, 2000]} loop={1} wrapper="span"/> 
+                            {eventInfo.scenarioText} <Typical steps={[eventInfo.originalText, 5000, eventInfo.changedText, 3000, eventInfo.changedText + eventInfo.extraText, 5000]} loop={1} wrapper="span"/> 
                         </Typography>
                         <Typography variant="body1" component="h2" className="pageHeader" style={{textAlign:'left', lineHeight: '2.0'}} gutterBottom>
                             {eventInfo.bodyText}
