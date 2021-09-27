@@ -64,7 +64,6 @@ const EventList = ({ nexusEvents }) => (
           </TableHead>
           <TableBody>
             {nexusEvents.map((row,key) => {
-              {console.log(row['code'])}
 
               return (
                 <TableRow hover tabIndex={-1} key={key}>
