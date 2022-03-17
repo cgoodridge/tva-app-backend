@@ -67,7 +67,7 @@ const NexusEventListPage = () => {
                             {/* <h2 className="pageHeader">Multiple Nexus Events Detected!</h2> */}
                         </Grid>
                         <Grid item xs={12} sm={5}>
-                            <div className="redLight"></div>
+                            {/* <div className="redLight"></div> */}
                         </Grid>
                     </Grid>
 
