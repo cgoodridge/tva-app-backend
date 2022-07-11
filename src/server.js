@@ -11,6 +11,7 @@ const __dirname = path.resolve();
 app.use(express.json());
 
 const dbUrl = process.env.DB_URL;
+console.log(dbUrl);
 const port = process.env.PORT || 5000;
 
 var Member = mongoose.model('Member', {
@@ -45,7 +46,7 @@ var EventDetails = mongoose.model('EventDetails', {
 });
 
 
-mongoose.connect(dbUrl,{ useNewUrlParser: true, useUnifiedTopology: true  }, (err) => {
+mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
     console.log('mongo db connection', err)
 });
 
@@ -63,7 +64,7 @@ app.get('/api/nexus-events', (req, res) => {
 
 app.get('/api/nexus-events/:code', (req, res) => {
     var code = req.params.code
-    EventDetails.findOne({code: code}, (err, eventDetails) => {
+    EventDetails.findOne({ code: code }, (err, eventDetails) => {
         res.send(eventDetails)
     })
 })

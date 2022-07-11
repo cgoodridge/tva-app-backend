@@ -5,6 +5,7 @@ import EventList from '../components/EventList';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import { Box, Typography } from '@material-ui/core';
+import SacredTimeline from '../components/SacredTimeline';
 
 const NexusEventListPage = () => {
 
@@ -81,9 +82,7 @@ const NexusEventListPage = () => {
         </div> */}
             {/* <canvas ref={canvas}></canvas> */}
             
-                <Typography variant="h5" className="errorMessage">
-                    Howdy y'all, the sacred timeline suffered some nasty damage, but our minutemen are working their very hardest to get it back up and running!
-                </Typography>
+                <SacredTimeline />
             
 
 
