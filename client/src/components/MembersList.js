@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
@@ -61,6 +61,7 @@ const MemberList = ({ members }) => {
         <>
             {members.map((member, key) => (
                 <MemberCard member={member} key={key} />
+                // <></>
             ))}
         </>
     );
@@ -68,11 +69,10 @@ const MemberList = ({ members }) => {
 
 const MemberCard = ({ member }) => {
 
-    const [open, setOpen] = React.useState(false);
-    const [selectedValue, setSelectedValue] = React.useState();
+    const [open, setOpen] = useState(false);
+    const [selectedValue, setSelectedValue] = useState();
 
     const handleClickOpen = () => {
-        console.log("Test");
         setOpen(true);
     };
 

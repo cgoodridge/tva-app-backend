@@ -11,7 +11,6 @@ const __dirname = path.resolve();
 app.use(express.json());
 
 const dbUrl = process.env.DB_URL;
-console.log(dbUrl);
 const port = process.env.PORT || 5000;
 
 var Member = mongoose.model('Member', {

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import threatContent from './threat-content';
-import AddCommentForm from '../components/AddCommentForm';
-import CommentsList from '../components/CommentsList';
+// import threatContent from './threat-content';
+// import AddCommentForm from '../components/AddCommentForm';
+// import CommentsList from '../components/CommentsList';
 import NotFoundPage from './NotFoundPage';
-import ThreatList from '../components/EventList';
-import ThreatLevelSection from '../components/ThreatLevelSection';
+// import ThreatList from '../components/EventList';
+// import ThreatLevelSection from '../components/ThreatLevelSection';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
