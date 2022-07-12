@@ -35,7 +35,7 @@ const SacredTimeline = ({ glow = null }) => {
         <Container sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
             <svg id="timeline" height="500px" width="100%" viewBox='100 100 500 500'>
 
-                <line x1="-4500" y1="150" x2="1000" y2="150" stroke='red' strokeWidth="5px" />
+                <line x1="-4500" y1="120" x2="1000" y2="120" stroke='red' strokeWidth="5px" />
 
                 {loops.map((key) => (
                     <TimelineBranch key={key} />
@@ -79,9 +79,9 @@ const TimelineBranch = () => {
     }
 
     useEffect(() => {
-        setNum(randomNumberInRange(100, 750));
+        setNum(randomNumberInRange(100, 500));
         setArcVerticalNum(randomNumberInRange(-500, 500));
-        setTimelineVEndLocation(randomNumberInRange(-310, 310))
+        setTimelineVEndLocation(randomNumberInRange(-100, 310))
     }, []);
 
     return (
