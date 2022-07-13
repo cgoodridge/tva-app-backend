@@ -43,9 +43,6 @@ const SacredTimeline = ({ glow = null }) => {
                 <path id="sacredTimeline" d="M -1000, 400 C0,100 5000,600 5000,120" stroke='white' fill='none' strokeWidth="8px" />
                 <line x1="-1000" y1="500" x2="1500" y2="500" stroke='red' strokeWidth="5px" />
 
-
-
-
             </svg>
         </Container>
 
@@ -85,7 +82,10 @@ const TimelineBranch = () => {
     }, []);
 
     return (
-        <path className="curve" d={`M -250, 310 C100,${arcVerticalNum} 100,${num} 1000,${timelineVEndLocation} s100, 100 100, 0`} stroke="orange" strokeWidth="5px" />
+        <>
+            <path className="curve" d={`M -250, 310 C100,${arcVerticalNum} 100,${num} 1000,${timelineVEndLocation} s100, 100 100, 0`} stroke="orange" strokeWidth="5px" />
+            <path className="curve" d={`M 250, 310 C100,${arcVerticalNum} 100,${num} 1000,${timelineVEndLocation} s100, 100 100, 0`} stroke="orange" strokeWidth="5px" />
+        </>
     );
 }
 
