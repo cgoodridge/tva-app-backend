@@ -30,8 +30,8 @@ const NavBar = () => {
 
 
   return(    
-    <div class="container navbar">
-        <div class="logo">
+    <div className="container navbar">
+        <div className="logo">
             <Link to="/">
                 <img src="../images/tva-logo.png" alt="TVA logo" width="130"/>
             </Link>
