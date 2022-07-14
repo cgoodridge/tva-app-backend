@@ -8,11 +8,11 @@
 }
 
 .curve:hover {
-    stroke-width: 16px;
+    stroke-width: 2px;
 
 }
 
 .curve {
     fill: none;
-    /* filter: blur(2px); */
+    /* filter: blur(0.4px); */
 }
