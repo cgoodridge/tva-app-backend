@@ -66,6 +66,13 @@ app.get('/api/nexus-events/:code', (req, res) => {
     })
 })
 
+app.get('/api/nexus-events/add-event', (req, res) => {
+    NexusEvent.find({}, (err, events) => {
+        res.send(events)
+    })
+})
+
+
 /*
 const withDB = async ( operations, res ) => {
 
