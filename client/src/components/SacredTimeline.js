@@ -3,10 +3,7 @@ import anime from 'animejs'
 import { useEffect, useState } from 'react';
 import '../css/sacredTimeline.css';
 
-const SacredTimeline = ({ glow = null }) => {
-
-
-
+const SacredTimeline = () => {
 
     useEffect(() => {
 
@@ -17,31 +14,26 @@ const SacredTimeline = ({ glow = null }) => {
             duration: 50000,
             delay: function (el, i) { return i * 250 },
             direction: 'normal',
-            loop: true
+            loop: false
         });
     })
 
-    const [loops, SetLoop] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-
-    const style = {
-        // filter: `url(#${glow})`,
-        fillOpacity: 0,
-        strokeWidth: 2,
-
-    }
+    const [loops] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
     return (
 
         <Container sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-            <svg id="timeline" height="500px" width="100%" viewBox='100 100 500 500'>
+            <svg id="timeline" height="500px" width="100%" viewBox='-100 -100 100 100'>
 
-                <line x1="-4500" y1="120" x2="1000" y2="120" stroke='red' strokeWidth="5px" />
-
+                <line x1="-200" y1="-95" x2="100" y2="-95" stroke='red' strokeWidth="1px" />
                 {loops.map((key) => (
-                    <TimelineBranch key={key} />
+                    <>
+                        <TimelineBranchPoint key={key} />
+                        {/* <TimelineBranchPoint key={key} /> */}
+                    </>
                 ))}
-                <path id="sacredTimeline" d="M -1000, 400 C0,100 5000,600 5000,120" stroke='white' fill='none' strokeWidth="8px" />
-                <line x1="-1000" y1="500" x2="1500" y2="500" stroke='red' strokeWidth="5px" />
+                <path id="sacredTimeline" d="M -200,-52.5   C0,-52.5   0,-52.5   5000,-52.5" stroke='white' fill='none' strokeWidth="1.5px" />
+                <line x1="-200" y1="-10" x2="100" y2="-10" stroke='red' strokeWidth="1px" />
 
             </svg>
         </Container>
@@ -49,10 +41,12 @@ const SacredTimeline = ({ glow = null }) => {
     );
 }
 
-const TimelineBranch = () => {
-    /// Buckle up buttercup this is gonna be complex
+const TimelineBranchPoint = () => {
+    /// Buckle up buttercup this is gonna be complex.
 
-    // By default curves have 3 points, lets call them A, B, C
+    // Number of branch points on the timeline.
+    const [branchPoints] = useState([1, 2, 3, 4, 5]);
+    // By default curves have 3 points, lets call them A, B, C.
     const [num, setNum] = useState(0);
 
     // This is point A-Horizontal, where the curve starts on the X or Horizontal axis. 
@@ -71,22 +65,43 @@ const TimelineBranch = () => {
     const [timelineVEndLocation, setTimelineVEndLocation] = useState(0);
 
     const randomNumberInRange = (min, max) => {
-        // 👇️ get number between min (inclusive) and max (inclusive)
+        // Get number between min (inclusive) and max (inclusive)
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
+    /// Makes sure all variables for the horizonal axis are relative to each other to avoid strange behaviour on the timeline
+    const randomNumberChecker = (startPoint, endPoint) => {
+        return startPoint >= endPoint;
+    }
+
+
     useEffect(() => {
+
         setNum(randomNumberInRange(100, 500));
         setArcVerticalNum(randomNumberInRange(-500, 500));
-        setTimelineVEndLocation(randomNumberInRange(-100, 310))
+        setTimelineHStartLocation(randomNumberInRange(-170, 70));
+        setTimelineVEndLocation(randomNumberInRange(-100, -950))
+        setTimelineHEndLocation(randomNumberInRange(-170, 70));
+
     }, []);
+    // console.log("Timeline start value " + timelineHStartLocation);
+    // console.log("Timeline end value " + timelineHEndLocation);
 
     return (
         <>
-            <path className="curve" d={`M -250, 310 C100,${arcVerticalNum} 100,${num} 1000,${timelineVEndLocation} s100, 100 100, 0`} stroke="orange" strokeWidth="5px" />
-            <path className="curve" d={`M 250, 310 C100,${arcVerticalNum} 100,${num} 1000,${timelineVEndLocation} s100, 100 100, 0`} stroke="orange" strokeWidth="5px" />
+            {/* {branchPoints.map(() => ( */}
+            {/* // ))} */}
+
+            <path className="curve" d={`M ${timelineHStartLocation},-52.5 Q100,-52.5 100,${num} T-170,-95`} stroke="orange" strokeWidth="1px" stroke-linecap="round" />
+
+            {/* <path className="curve" d={`M -140, -52.5 C150,${arcVerticalNum} 100,${num} 1000,${timelineVEndLocation} s100, 100 100, 0`} stroke="orange" strokeWidth="1px" stroke-linecap="round" />
+            <path className="curve" d={`M -110, -52.5 C150,${arcVerticalNum} 100,${num} 1000,${timelineVEndLocation} s100, 100 100, 0`} stroke="orange" strokeWidth="1px" stroke-linecap="round" />
+            <path className="curve" d={`M -90, -52.5 C150,${arcVerticalNum} 100,${num} 1000,${timelineVEndLocation} s100, 100 100, 0`} stroke="orange" strokeWidth="1px" stroke-linecap="round" />
+            <path className="curve" d={`M -60, -52.5 C150,${arcVerticalNum} 100,${num} 1000,${timelineVEndLocation} s100, 100 100, 0`} stroke="orange" strokeWidth="1px" stroke-linecap="round" /> */}
+
         </>
     );
+
 }
 
 export default SacredTimeline;

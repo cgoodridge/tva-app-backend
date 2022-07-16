@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 dotenv.config();
 
-
 const app = express();
 const __dirname = path.resolve();
 
@@ -44,7 +43,6 @@ var EventDetails = mongoose.model('EventDetails', {
 
 });
 
-
 mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
     console.log('mongo db connection', err)
 });
@@ -67,6 +65,13 @@ app.get('/api/nexus-events/:code', (req, res) => {
         res.send(eventDetails)
     })
 })
+
+app.get('/api/nexus-events/add-event', (req, res) => {
+    NexusEvent.find({}, (err, events) => {
+        res.send(events)
+    })
+})
+
 
 /*
 const withDB = async ( operations, res ) => {
@@ -176,7 +181,6 @@ app.get('*', (req, res) => {
 })
 */
 
-
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, './client/build')));
     app.get('*', (req, res) => {
@@ -188,6 +192,5 @@ else {
         res.send('API running');
     });
 }
-
 
 var server = app.listen(port, () => console.log('Listening on port ' + server.address().port));
