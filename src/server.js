@@ -66,10 +66,33 @@ app.get('/api/nexus-events/:code', (req, res) => {
     })
 })
 
-app.get('/api/nexus-events/add-event', (req, res) => {
-    NexusEvent.find({}, (err, events) => {
-        res.send(events)
-    })
+app.post('/api/nexus-events/add-event', (req, res) => {
+    var eventTitle = req.params.eventTitle;
+    var introText = req.params.introText;
+    var bodyText = req.params.bodyText;
+    var originalText = req.params.originalText;
+    var changedText = req.params.changedText;
+    var scenarioText = req.params.scenarioText;
+    var extraText = req.params.extraText;
+    var eventDate = req.params.eventDate;
+    var eventTime = req.params.eventTime;
+    var eventLocation = req.params.eventLocation;
+
+    EventDetails.insertMany(
+        {
+            eventTitle: eventTitle,
+            introText: introText,
+            bodyText: bodyText,
+            originalText: originalText,
+            changedText: changedText,
+            scenarioText: scenarioText,
+            extraText: extraText,
+            eventDate: ISODate(eventDate),
+            eventTime: Timestamp(eventTime),
+            eventLocation: eventLocation
+        }, (err, nexusEvent) => {
+            res.status(200).json(nexusEvent);
+        })
 })
 
 
