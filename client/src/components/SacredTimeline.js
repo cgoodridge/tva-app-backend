@@ -9,7 +9,7 @@ const SacredTimeline = () => {
 
         anime({
             targets: '#timeline .curve',
-            strokeDashoffset: [anime.setDashoffset, 2],
+            strokeDashoffset: [anime.setDashoffset, 1],
             easing: 'linear',
             duration: 50000,
             delay: function (el, i) { return i * 250 },
@@ -46,13 +46,15 @@ const TimelineBranchPoint = () => {
 
     // Number of branch points on the timeline.
     const [branchPoints] = useState([1, 2, 3, 4, 5]);
+
     // By default curves have 3 points, lets call them A, B, C.
-    const [num, setNum] = useState(0);
+    const [controlVPoint, setVControlPoint] = useState(0);
+    const [controlHPoint, setHControlPoint] = useState(100);
 
     // This is point A-Horizontal, where the curve starts on the X or Horizontal axis. 
     const [timelineHStartLocation, setTimelineHStartLocation] = useState(0);
     // This is point A-Vertical, where the curve starts on the Y or Vertical axis
-    const [timelineVStartLocation, setTimelineVStartLocation] = useState(0);
+    const [timelineVStartLocation, setTimelineVStartLocation] = useState(-52.5);
 
     // This is point B-Horizontal, where the midpoint of the exist on the X or Horizontal axis. This is the bending point for the curve.
     const [arcHorizontalNum, setArcHorizontalNum] = useState(0);
@@ -77,10 +79,10 @@ const TimelineBranchPoint = () => {
 
     useEffect(() => {
 
-        setNum(randomNumberInRange(100, 500));
+        setVControlPoint(randomNumberInRange(100, 500));
         setArcVerticalNum(randomNumberInRange(-500, 500));
         setTimelineHStartLocation(randomNumberInRange(-170, 70));
-        setTimelineVEndLocation(randomNumberInRange(-100, -950))
+        setTimelineVEndLocation(randomNumberInRange(-100, -95))
         setTimelineHEndLocation(randomNumberInRange(-170, 70));
 
     }, []);
@@ -92,7 +94,8 @@ const TimelineBranchPoint = () => {
             {/* {branchPoints.map(() => ( */}
             {/* // ))} */}
 
-            <path className="curve" d={`M ${timelineHStartLocation},-52.5 Q100,-52.5 100,${num} T-170,-95`} stroke="orange" strokeWidth="1px" stroke-linecap="round" />
+            <path className="curve" d={`M${timelineHStartLocation},${timelineVStartLocation} Q${controlHPoint},${controlVPoint} ${timelineHEndLocation},${timelineVEndLocation}`} stroke="orange" strokeWidth="1px" stroke-linecap="round" />
+            {/* <path className="curve" d={`M${timelineHStartLocation},${timelineVStartLocation} Q100,-52.5 ${controlHPoint},${controlVPoint} T-170,95`} stroke="orange" strokeWidth="1px" stroke-linecap="round" /> */}
 
             {/* <path className="curve" d={`M -140, -52.5 C150,${arcVerticalNum} 100,${num} 1000,${timelineVEndLocation} s100, 100 100, 0`} stroke="orange" strokeWidth="1px" stroke-linecap="round" />
             <path className="curve" d={`M -110, -52.5 C150,${arcVerticalNum} 100,${num} 1000,${timelineVEndLocation} s100, 100 100, 0`} stroke="orange" strokeWidth="1px" stroke-linecap="round" />
