@@ -67,28 +67,30 @@ app.get('/api/nexus-events/:code', (req, res) => {
 })
 
 app.post('/api/nexus-events/add-event', (req, res) => {
-    var eventTitle = req.params.eventTitle;
-    var introText = req.params.introText;
-    var bodyText = req.params.bodyText;
-    var originalText = req.params.originalText;
-    var changedText = req.params.changedText;
-    var scenarioText = req.params.scenarioText;
-    var extraText = req.params.extraText;
-    var eventDate = req.params.eventDate;
-    var eventTime = req.params.eventTime;
-    var eventLocation = req.params.eventLocation;
+    var eventTitle = req.body.eventTitle;
+    var introText = req.body.introText;
+    var bodyText = req.body.bodyText;
+    var originalText = req.body.originalText;
+    var changedText = req.body.changedText;
+    var scenarioText = req.body.scenarioText;
+    var extraText = req.body.extraText;
+    var eventDate = req.body.eventDate;
+    var eventTime = req.body.eventTime;
+    var eventLocation = req.body.eventLocation;
 
-    EventDetails.insertMany(
+    console.log("TESTING " + req.body.eventTitle);
+
+    EventDetails.create(
         {
-            eventTitle: eventTitle,
+            pageTitle: eventTitle,
             introText: introText,
             bodyText: bodyText,
             originalText: originalText,
             changedText: changedText,
             scenarioText: scenarioText,
             extraText: extraText,
-            eventDate: ISODate(eventDate),
-            eventTime: Timestamp(eventTime),
+            data: Date(eventDate),
+            eventTime: eventTime,
             eventLocation: eventLocation
         }, (err, nexusEvent) => {
             res.status(200).json(nexusEvent);
