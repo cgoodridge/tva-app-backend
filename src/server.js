@@ -22,14 +22,13 @@ var Member = mongoose.model('Member', {
 
 var NexusEvent = mongoose.model('NexusEvent', {
     code: String,
-    date: Date,
+    dateTime: Date,
     location: String,
-
 });
 
 var EventDetails = mongoose.model('EventDetails', {
     code: String,
-    date: Date,
+    dateTime: Date,
     pageTitle: String,
     headerImageURL: String,
     introText: String,
@@ -66,6 +65,12 @@ app.get('/api/nexus-events/:code', (req, res) => {
     })
 })
 
+const randomNumberInRange = (min, max) => {
+    // Get number between min (inclusive) and max (inclusive)
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
 app.post('/api/nexus-events/add-event', (req, res) => {
     var eventTitle = req.body.eventTitle;
     var introText = req.body.introText;
@@ -74,14 +79,27 @@ app.post('/api/nexus-events/add-event', (req, res) => {
     var changedText = req.body.changedText;
     var scenarioText = req.body.scenarioText;
     var extraText = req.body.extraText;
-    var eventDate = req.body.eventDate;
-    var eventTime = req.body.eventTime;
+    var eventDateTime = req.body.eventDateTime;
     var eventLocation = req.body.eventLocation;
 
-    console.log("TESTING " + req.body.eventTitle);
+    var codeStart = "426";
+    var codeEnd = randomNumberInRange(10000000, 99999999);
+    var finalCode = codeStart + codeEnd.toString();
+
+
+    NexusEvent.create(
+        {
+            code: finalCode,
+            location: eventLocation,
+            dateTime: eventDateTime
+
+        }, (err, nexusEvent) => {
+            res.status(200).json(nexusEvent);
+        })
 
     EventDetails.create(
         {
+            code: finalCode,
             pageTitle: eventTitle,
             introText: introText,
             bodyText: bodyText,
@@ -89,12 +107,12 @@ app.post('/api/nexus-events/add-event', (req, res) => {
             changedText: changedText,
             scenarioText: scenarioText,
             extraText: extraText,
-            data: Date(eventDate),
-            eventTime: eventTime,
-            eventLocation: eventLocation
-        }, (err, nexusEvent) => {
-            res.status(200).json(nexusEvent);
+            dateTime: eventDateTime,
+            location: eventLocation
+        }, (err, eventDetails) => {
+            res.status(200).json(eventDetails);
         })
+
 })
 
 

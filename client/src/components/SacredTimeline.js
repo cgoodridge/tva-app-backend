@@ -5,6 +5,21 @@ import '../css/sacredTimeline.css';
 
 const SacredTimeline = () => {
 
+    const [nexusEvents, setNexusEventList] = useState([]);
+    
+    useEffect(() => {
+
+
+        const fetchData = async () => {
+            const result = await fetch(`/api/nexus-events`);
+            const body = await result.json();
+            setNexusEventList(body);
+        }
+        fetchData();
+
+    }, []);
+
+
     useEffect(() => {
 
         anime({
