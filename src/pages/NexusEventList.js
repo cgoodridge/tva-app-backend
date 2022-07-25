@@ -1,24 +1,20 @@
-
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import EventList from '../components/EventList';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 import SacredTimeline from '../components/SacredTimeline';
+import { database } from '../firebase/auth';
 
 const NexusEventListPage = () => {
 
     const [nexusEvents, setNexusEventList] = useState([]);
-    
+
     useEffect(() => {
-
-
-        const fetchData = async () => {
-            const result = await fetch(`/api/nexus-events`);
-            const body = await result.json();
-            setNexusEventList(body);
-        }
-        fetchData();
-
+        return database.collection('events').onSnapshot((snapshot) => {
+            const eventData = [];
+            snapshot.forEach(doc => eventData.push({ ...doc.data(), id: doc.id, firstName: doc.data().firstName, lastName: doc.data().lastName, role: doc.data().role, email: doc.data().email, bio: doc.data().bio }));
+            setNexusEventList(eventData);
+        });
     }, []);
 
     return (
@@ -46,9 +42,9 @@ const NexusEventListPage = () => {
             </video>
         </div> */}
             {/* <canvas ref={canvas}></canvas> */}
-            
-                <SacredTimeline />
-            
+
+            <SacredTimeline />
+
             <Container>
                 <EventList nexusEvents={nexusEvents} />
             </Container>

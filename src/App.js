@@ -7,11 +7,11 @@ import MembersListPage from './pages/MembersListPage';
 import EventDetailPage from './pages/EventDetailPage';
 import NotFoundPage from './pages/NotFoundPage';
 import NavBar from './NavBar';
-import { makeStyles, useTheme, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       light: '#757ce8',
@@ -38,15 +38,15 @@ function App() {
             <NavBar />
           </header>
           <main>
-            <Switch>
-              <Route path="/" component={HomePage} exact/>
-              <Route path="/about" component={AboutPage} />
-              <Route path="/nexus-events" component={NexusEventList} />
-              <Route path="/members" component={MembersListPage} />
-              <Route path="/timeline" component={NexusEventList} />
-              <Route path="/event/:code" component={EventDetailPage} />
-              <Route component={NotFoundPage} />
-            </Switch>
+            <Routes>
+              <Route path="/" element={<HomePage/>} exact />
+              <Route path="/about" element={<AboutPage/>} />
+              <Route path="/nexus-events" element={<NexusEventList/>} />
+              <Route path="/members" element={<MembersListPage/>} />
+              <Route path="/timeline" element={<NexusEventList/>} />
+              <Route path="/event/:code" element={<EventDetailPage/>} />
+              <Route element={<NotFoundPage/>} />
+            </Routes>
           </main>
           <footer>
             <p> &copy; Copyright TVA &infin; &infin; || Note: This is a fan portfoltio project and is not affiliated with Marvel Studios.</p>
@@ -54,7 +54,7 @@ function App() {
         </ThemeProvider>
       </div>
     </Router>
-    
+
   );
 }
 

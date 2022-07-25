@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Button from '@material-ui/core/Button';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Button from '@mui/material/Button';
 import moment from 'moment';
 
 
@@ -40,10 +40,7 @@ import moment from 'moment';
   
 
 const EventList = ({ nexusEvents }) => (
-
     <>
-    
-    
       <TableContainer className="tableContainer">
         <Table stickyHeader aria-label="sticky table">
           <TableHead >
@@ -78,7 +75,7 @@ const EventList = ({ nexusEvents }) => (
                     );
                   })}
                   <TableCell> 
-                    <Link key={key} to={`/event/${row['code']}`} >
+                    <Link key={key} to={`/event/${row['code']}`} state={{ eventData: row }}>
                       <Button variant="outlined" size="small" color="primary">
                         View Event
                       </Button>
@@ -89,10 +86,7 @@ const EventList = ({ nexusEvents }) => (
             })}
           </TableBody>
         </Table>
-      </TableContainer>
-
-    
-    
+      </TableContainer>    
     </>
 );
 

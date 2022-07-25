@@ -1,37 +1,28 @@
 import React, { useState, useEffect } from 'react';
-// import threatContent from './threat-content';
-// import AddCommentForm from '../components/AddCommentForm';
-// import CommentsList from '../components/CommentsList';
 import NotFoundPage from './NotFoundPage';
-// import ThreatList from '../components/EventList';
-// import ThreatLevelSection from '../components/ThreatLevelSection';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+import CssBaseline from '@mui/material/CssBaseline';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 import Typical from 'react-typical';
 import moment from 'moment';
 import '../css/eventDetails.css';
+import { useLocation } from 'react-router-dom';
 
 
 const EventDetailPage = ({ match }) => {
 
+    const location = useLocation();
 
+    const code = location.state.eventData.code;
 
-    const code = match.params.code;
-
-    const [eventInfo, setEventInfo] = useState({ code: '', date: '', pageTitle: '', titleImg: '', introText: '', changedText: '', extraText: '', originalText: '', scenarioText: '', bodyImg: '', notableChange: [] });
+    const [eventInfo, setEventInfo] = useState({ code: '', date: '', pageTitle: '', titleImg: '', introText: '', changedText: '', extraText: '', originalText: '', scenarioText: '', bodyImg: '', notableChanges: [] });
 
     useEffect(() => {
 
-        const fetchData = async () => {
-            const result = await fetch(`/api/nexus-events/${code}`);
-            const body = await result.json();
-            setEventInfo(body);
-        }
-        fetchData();
+        setEventInfo(location.state.eventData);
 
-    }, [code]);
+    });
 
     if (!code) return <NotFoundPage />
 

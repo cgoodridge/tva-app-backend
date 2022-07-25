@@ -1,12 +1,12 @@
-import { Container } from '@material-ui/core';
-import anime from 'animejs'
+import Container from '@mui/material/Container';
+import anime from 'animejs/lib/anime.es.js';
 import { useEffect, useState } from 'react';
 import '../css/sacredTimeline.css';
 
 const SacredTimeline = () => {
 
     const [nexusEvents, setNexusEventList] = useState([]);
-    
+
     useEffect(() => {
 
 
