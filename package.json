@@ -1,36 +1,53 @@
 {
-  "name": "tva-app-backend",
-  "version": "1.0.0",
-  "description": "",
-  "type": "module",
-  "main": "server.js",
-  "scripts": {
-    "start": "npx nodemon --exec npx babel-node src/server.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js",
-    "predev": "fuser -k 8000/tcp && echo 'Terminated' || echo 'Nothing was running on the PORT'"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "name": "tva-app",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://tva-app.herokuapp.com/",
+  "proxy": "http://localhost:5000/",
   "dependencies": {
-    "@emotion/react": "^11.9.3",
-    "@emotion/styled": "^11.9.3",
-    "@mui/icons-material": "^5.8.4",
-    "@mui/material": "^5.8.6",
-    "animejs": "^3.2.1",
-    "body-parser": "^1.19.0",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
+    "@material-ui/core": "^4.11.4",
+    "@material-ui/icons": "^4.11.2",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "materialize-css": "^1.0.0-rc.2",
     "moment": "^2.29.1",
-    "mongodb": "^3.6.9",
-    "mongoose": "^6.0.4"
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-lazy-hero": "^2.0.0",
+    "react-materialize": "^3.9.8",
+    "react-redux": "^7.2.4",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "react-typical": "^0.1.3",
+    "recharts": "^2.1.9",
+    "redux": "^4.1.0",
+    "styled-components": "^5.3.0",
+    "web-vitals": "^1.1.2",
+    "whatwg-fetch": "^3.6.2"
   },
-  "devDependencies": {
-    "@babel/core": "^7.14.6",
-    "@babel/node": "^7.14.7",
-    "@babel/preset-env": "^7.14.7",
-    "nodemon": "^2.0.12"
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
