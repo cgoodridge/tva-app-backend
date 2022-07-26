@@ -2,29 +2,17 @@ import Container from '@mui/material/Container';
 import anime from 'animejs/lib/anime.es.js';
 import { useEffect, useState } from 'react';
 import '../css/sacredTimeline.css';
-
-const SacredTimeline = () => {
-
-    const [nexusEvents, setNexusEventList] = useState([]);
-
-    useEffect(() => {
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
 
 
-        const fetchData = async () => {
-            const result = await fetch(`/api/nexus-events`);
-            const body = await result.json();
-            setNexusEventList(body);
-        }
-        fetchData();
-
-    }, []);
-
+const SacredTimeline = ({ nexusEvents }) => {
 
     useEffect(() => {
 
         anime({
             targets: '#timeline .curve',
-            strokeDashoffset: [anime.setDashoffset, 1],
+            strokeDashoffset: [anime.setDashoffset, 2],
             easing: 'linear',
             duration: 50000,
             delay: function (el, i) { return i * 250 },
@@ -41,13 +29,13 @@ const SacredTimeline = () => {
             <svg id="timeline" height="500px" width="100%" viewBox='-100 -100 100 100'>
 
                 <line x1="-200" y1="-95" x2="100" y2="-95" stroke='red' strokeWidth="1px" />
-                {loops.map((key) => (
+                {nexusEvents.map((key) => (
                     <>
                         <TimelineBranchPoint key={key} />
                         {/* <TimelineBranchPoint key={key} /> */}
                     </>
                 ))}
-                <path id="sacredTimeline" d="M -200,-52.5   C0,-52.5   0,-52.5   5000,-52.5" stroke='white' fill='none' strokeWidth="1.5px" />
+                <path id="sacredTimeline" d="M -200,-52.5   C0,-52.5   0,-52.5   5000,-52.5" stroke='white' fill='none' strokeWidth="0.8px" />
                 <line x1="-200" y1="-10" x2="100" y2="-10" stroke='red' strokeWidth="1px" />
 
             </svg>
@@ -91,11 +79,10 @@ const TimelineBranchPoint = () => {
         return startPoint >= endPoint;
     }
 
-
     useEffect(() => {
 
-        setVControlPoint(randomNumberInRange(100, 500));
-        setArcVerticalNum(randomNumberInRange(-500, 500));
+        setVControlPoint(randomNumberInRange(100, 200));
+        // setArcVerticalNum(randomNumberInRange(-100, 100));
         setTimelineHStartLocation(randomNumberInRange(-170, 70));
         setTimelineVEndLocation(randomNumberInRange(-100, -95))
         setTimelineHEndLocation(randomNumberInRange(-170, 70));
@@ -109,14 +96,13 @@ const TimelineBranchPoint = () => {
             {/* {branchPoints.map(() => ( */}
             {/* // ))} */}
 
-            <path className="curve" d={`M${timelineHStartLocation},${timelineVStartLocation} Q${controlHPoint},${controlVPoint} ${timelineHEndLocation},${timelineVEndLocation}`} stroke="orange" strokeWidth="1px" stroke-linecap="round" />
+            <path className="curve" d={`M${timelineHStartLocation},${timelineVStartLocation} Q${controlHPoint},${controlVPoint} ${timelineHEndLocation},70`} stroke="orange" strokeWidth="1px" stroke-linecap="round" />
             {/* <path className="curve" d={`M${timelineHStartLocation},${timelineVStartLocation} Q100,-52.5 ${controlHPoint},${controlVPoint} T-170,95`} stroke="orange" strokeWidth="1px" stroke-linecap="round" /> */}
 
             {/* <path className="curve" d={`M -140, -52.5 C150,${arcVerticalNum} 100,${num} 1000,${timelineVEndLocation} s100, 100 100, 0`} stroke="orange" strokeWidth="1px" stroke-linecap="round" />
             <path className="curve" d={`M -110, -52.5 C150,${arcVerticalNum} 100,${num} 1000,${timelineVEndLocation} s100, 100 100, 0`} stroke="orange" strokeWidth="1px" stroke-linecap="round" />
             <path className="curve" d={`M -90, -52.5 C150,${arcVerticalNum} 100,${num} 1000,${timelineVEndLocation} s100, 100 100, 0`} stroke="orange" strokeWidth="1px" stroke-linecap="round" />
             <path className="curve" d={`M -60, -52.5 C150,${arcVerticalNum} 100,${num} 1000,${timelineVEndLocation} s100, 100 100, 0`} stroke="orange" strokeWidth="1px" stroke-linecap="round" /> */}
-
         </>
     );
 

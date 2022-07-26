@@ -69,7 +69,6 @@ const EventList = ({ nexusEvents }) => (
 
                     return (
                       <TableCell key={key} align={column.align}>
-
                           {column.format && column.type === 'string' ? value : column.format && column.type === 'date' ? column.format(value) : column.format && column.type === 'time' ? column.format(value) : value}
                       </TableCell>
                     );

@@ -43,7 +43,7 @@ const NexusEventListPage = () => {
         </div> */}
             {/* <canvas ref={canvas}></canvas> */}
 
-            <SacredTimeline />
+            <SacredTimeline nexusEvents={nexusEvents}/>
 
             <Container>
                 <EventList nexusEvents={nexusEvents} />
