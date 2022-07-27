@@ -51,7 +51,7 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     [`& .${tooltipClasses.tooltip}`]: {
         backgroundColor: '#f5f5f9',
         color: 'rgba(0, 0, 0, 0.87)',
-        maxWidth: 220,
+        maxWidth: 500,
         fontSize: theme.typography.pxToRem(12),
         border: '1px solid #dadde9',
     },
@@ -104,14 +104,15 @@ const TimelineBranchPoint = ({ eventData }) => {
 
     return (
         <>
-           
+
 
             <HtmlTooltip
                 title={
                     <>
-                        <Typography color="inherit">{eventData.eventTitle}</Typography>
-                        <em>{"And here's"}</em> <b>{'some'}</b> <u>{'amazing content'}</u>.{' '}
-                        {"It's very engaging. Right?"}
+                        <Typography variant="h6" gutterBottom component="div" color="inherit">{eventData.eventTitle}</Typography>
+                        <Typography variant="subtitle1" gutterBottom component="div" color="inherit">{eventData.introText}</Typography>
+
+
                     </>
                 }
             >
