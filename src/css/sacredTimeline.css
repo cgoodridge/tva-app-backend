@@ -1,16 +1,27 @@
 #sacredTimeline {
     z-index: 99;
+    /* pointer-events: none; */
+    overflow-x: scroll;
 }
 
-#timeline{
+.timelinePoint {
+    pointer-events: all;
+}
+
+#timeline {
     margin: 0 auto;
     display: block;
+    pointer-events: none;
 }
 
-.curve:hover {
+.timelinePoint:hover {
+    stroke-width: 4px;
+}
+
+/* .curve:hover {
     stroke-width: 2px;
 
-}
+} */
 
 .curve {
     fill: none;

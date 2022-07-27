@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import '../css/sacredTimeline.css';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
 
 
 const SacredTimeline = ({ nexusEvents }) => {
@@ -25,26 +26,38 @@ const SacredTimeline = ({ nexusEvents }) => {
 
     return (
 
-        <Container sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+        <Container sx={{ display: 'flex', alignItems: 'center', height: '100%', overflowX: "scroll" }}>
             <svg id="timeline" height="500px" width="100%" viewBox='-100 -100 100 100'>
-
                 <line x1="-200" y1="-95" x2="100" y2="-95" stroke='red' strokeWidth="1px" />
-                {nexusEvents.map((key) => (
+                {nexusEvents.map((eventData, key) => (
                     <>
-                        <TimelineBranchPoint key={key} />
+                        <TimelineBranchPoint eventData={eventData} key={key} />
                         {/* <TimelineBranchPoint key={key} /> */}
                     </>
                 ))}
-                <path id="sacredTimeline" d="M -200,-52.5   C0,-52.5   0,-52.5   5000,-52.5" stroke='white' fill='none' strokeWidth="0.8px" />
-                <line x1="-200" y1="-10" x2="100" y2="-10" stroke='red' strokeWidth="1px" />
+                <path id="sacredTimeline" d="M -200,-52.5   C0,-52.5   0,-52.5   5000,-52.5" stroke='white' fill='none' strokeWidth="1px" />
 
+                <line x1="-200" y1="-10" x2="100" y2="-10" stroke='red' strokeWidth="1px" />
             </svg>
         </Container>
 
     );
 }
 
-const TimelineBranchPoint = () => {
+
+const HtmlTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: '#f5f5f9',
+        color: 'rgba(0, 0, 0, 0.87)',
+        maxWidth: 220,
+        fontSize: theme.typography.pxToRem(12),
+        border: '1px solid #dadde9',
+    },
+}));
+
+const TimelineBranchPoint = ({ eventData }) => {
     /// Buckle up buttercup this is gonna be complex.
 
     // Number of branch points on the timeline.
@@ -88,21 +101,26 @@ const TimelineBranchPoint = () => {
         setTimelineHEndLocation(randomNumberInRange(-170, 70));
 
     }, []);
-    // console.log("Timeline start value " + timelineHStartLocation);
-    // console.log("Timeline end value " + timelineHEndLocation);
 
     return (
         <>
-            {/* {branchPoints.map(() => ( */}
-            {/* // ))} */}
+           
 
-            <path className="curve" d={`M${timelineHStartLocation},${timelineVStartLocation} Q${controlHPoint},${controlVPoint} ${timelineHEndLocation},70`} stroke="orange" strokeWidth="1px" stroke-linecap="round" />
-            {/* <path className="curve" d={`M${timelineHStartLocation},${timelineVStartLocation} Q100,-52.5 ${controlHPoint},${controlVPoint} T-170,95`} stroke="orange" strokeWidth="1px" stroke-linecap="round" /> */}
+            <HtmlTooltip
+                title={
+                    <>
+                        <Typography color="inherit">{eventData.eventTitle}</Typography>
+                        <em>{"And here's"}</em> <b>{'some'}</b> <u>{'amazing content'}</u>.{' '}
+                        {"It's very engaging. Right?"}
+                    </>
+                }
+            >
+                <g stroke="white" stroke-width="2" fill='white'>
+                    <circle id="pointA" className='timelinePoint' cx={timelineHStartLocation} cy={timelineVStartLocation} r="1" />
+                </g>
+            </HtmlTooltip>
+            <path className="curve" d={`M${timelineHStartLocation},${timelineVStartLocation} Q${controlHPoint},${controlVPoint} ${timelineHEndLocation},70`} stroke="orange" strokeWidth="1px" stroke-linecap="round" fill="none" />
 
-            {/* <path className="curve" d={`M -140, -52.5 C150,${arcVerticalNum} 100,${num} 1000,${timelineVEndLocation} s100, 100 100, 0`} stroke="orange" strokeWidth="1px" stroke-linecap="round" />
-            <path className="curve" d={`M -110, -52.5 C150,${arcVerticalNum} 100,${num} 1000,${timelineVEndLocation} s100, 100 100, 0`} stroke="orange" strokeWidth="1px" stroke-linecap="round" />
-            <path className="curve" d={`M -90, -52.5 C150,${arcVerticalNum} 100,${num} 1000,${timelineVEndLocation} s100, 100 100, 0`} stroke="orange" strokeWidth="1px" stroke-linecap="round" />
-            <path className="curve" d={`M -60, -52.5 C150,${arcVerticalNum} 100,${num} 1000,${timelineVEndLocation} s100, 100 100, 0`} stroke="orange" strokeWidth="1px" stroke-linecap="round" /> */}
         </>
     );
 

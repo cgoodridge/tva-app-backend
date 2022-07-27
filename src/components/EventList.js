@@ -11,7 +11,12 @@ import moment from 'moment';
 
 
   const columns = [
-    { id: 'code', type:'string', label: 'Event', minWidth: 170 },
+    { 
+      id: 'code', 
+      type:'string', 
+      label: 'Event', 
+      minWidth: 170 
+    },
     { 
       id: 'dateTime', 
       label: 'Date',
@@ -61,12 +66,10 @@ const EventList = ({ nexusEvents }) => (
           </TableHead>
           <TableBody>
             {nexusEvents.map((row,key) => {
-
               return (
                 <TableRow hover tabIndex={-1} key={key}>
                   {columns.map((column, key) => {
                     const value = row[column.id];
-
                     return (
                       <TableCell key={key} align={column.align}>
                           {column.format && column.type === 'string' ? value : column.format && column.type === 'date' ? column.format(value) : column.format && column.type === 'time' ? column.format(value) : value}
@@ -88,6 +91,5 @@ const EventList = ({ nexusEvents }) => (
       </TableContainer>    
     </>
 );
-
 
 export default EventList;

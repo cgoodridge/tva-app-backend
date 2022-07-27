@@ -6,7 +6,7 @@ import NexusEventList from './pages/NexusEventList';
 import MembersListPage from './pages/MembersListPage';
 import EventDetailPage from './pages/EventDetailPage';
 import NotFoundPage from './pages/NotFoundPage';
-import NavBar from './NavBar';
+import NavBar from './components/Navbar';
 import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -49,7 +49,7 @@ function App() {
             </Routes>
           </main>
           <footer>
-            <p> &copy; Copyright TVA &infin; &infin; || Note: This is a fan portfoltio project and is not affiliated with Marvel Studios.</p>
+            <p> &copy; Copyright TVA &infin; || Note: This is a fan project and not affiliated with Marvel Studios.</p>
           </footer>
         </ThemeProvider>
       </div>
