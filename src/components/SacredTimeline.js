@@ -29,7 +29,7 @@ const SacredTimeline = ({ nexusEvents }) => {
         <Container sx={{ display: 'flex', alignItems: 'center', height: '100%', overflowX: "scroll" }}>
             <svg id="timeline" height="500px" width="100%" viewBox='-100 -100 100 100'>
                 <line x1="-200" y1="-95" x2="100" y2="-95" stroke='red' strokeWidth="1px" />
-                {nexusEvents.map((eventData, key) => (
+                {nexusEvents.sort((objA, objB) => Number(objA.releaseDate) - Number(objB.releaseDate)).map((eventData, key) => (
                     <>
                         <TimelineBranchPoint eventData={eventData} key={key} />
                         {/* <TimelineBranchPoint key={key} /> */}
