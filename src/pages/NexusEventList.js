@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import TimelineEventList from '../components/TimelineEventList';
 
 const TabPanel = (props) => {
     const { children, value, index, ...other } = props;
@@ -46,9 +47,7 @@ const a11yProps = (index) => {
 const NexusEventListPage = () => {
 
     const [nexusEvents, setNexusEventList] = useState([]);
-
-
-
+    const [timelineEvents, setTimelineEvents] = useState([]);
 
     useEffect(() => {
         return database.collection('events').onSnapshot((snapshot) => {
@@ -58,19 +57,27 @@ const NexusEventListPage = () => {
         });
     }, []);
 
+    useEffect(() => {
+        return database.collection('timelineEvents').onSnapshot((snapshot) => {
+            const timelineEventData = [];
+            snapshot.forEach(doc => timelineEventData.push({ ...doc.data(), id: doc.id, name: doc.data().name, phase: doc.data().phase, releaseDate: doc.data().releaseDate }));
+            setTimelineEvents(timelineEventData);
+        });
+    }, []);
+
     return (
         <>
             <Container>
                 <Grid container >
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={6} sm={6}>
                         <h1 className="pageHeader">Sacred Timeline</h1>
                     </Grid>
-                    <Grid item xs={12} sm={6} container>
-                        <Grid item xs={12} sm={7}>
-                            {/* <h2 className="pageHeader">Multiple Nexus Events Detected!</h2> */}
+                    <Grid item xs={6} sm={6} container>
+                        <Grid item xs={6} sm={6}>
+                            <h4 className="pageHeader">Multiple Nexus Events Detected!</h4>
                         </Grid>
-                        <Grid item xs={12} sm={5}>
-                            {/* <div className="redLight"></div> */}
+                        <Grid item xs={6} sm={4}>
+                            <div className="redLight"></div>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -86,14 +93,14 @@ const NexusEventListPage = () => {
 
             <SacredTimeline nexusEvents={nexusEvents} />
 
-            <EventTabs nexusEvents={nexusEvents} />
+            <EventTabs nexusEvents={nexusEvents} timelineEvents={timelineEvents} />
         </>
     )
 
 
 }
 
-const EventTabs = ({ nexusEvents }) => {
+const EventTabs = ({ nexusEvents, timelineEvents }) => {
 
     const [value, setValue] = React.useState(0);
 
@@ -113,7 +120,7 @@ const EventTabs = ({ nexusEvents }) => {
                 <EventList nexusEvents={nexusEvents} />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                Item Two
+                <TimelineEventList timelineEvents={timelineEvents}/>
             </TabPanel>
 
         </Box>

@@ -29,13 +29,14 @@ const SacredTimeline = ({ nexusEvents }) => {
         <Container sx={{ display: 'flex', alignItems: 'center', height: '100%', overflowX: "scroll" }}>
             <svg id="timeline" height="500px" width="100%" viewBox='-100 -100 100 100'>
                 <line x1="-200" y1="-95" x2="100" y2="-95" stroke='red' strokeWidth="1px" />
+                <path id="sacredTimeline" d="M -200,-52.5   C0,-52.5   0,-52.5   5000,-52.5" stroke='white' fill='none' strokeWidth="1px" />
+
                 {nexusEvents.sort((objA, objB) => Number(objA.releaseDate) - Number(objB.releaseDate)).map((eventData, key) => (
                     <>
                         <TimelineBranchPoint eventData={eventData} key={key} />
                         {/* <TimelineBranchPoint key={key} /> */}
                     </>
                 ))}
-                <path id="sacredTimeline" d="M -200,-52.5   C0,-52.5   0,-52.5   5000,-52.5" stroke='white' fill='none' strokeWidth="1px" />
 
                 <line x1="-200" y1="-10" x2="100" y2="-10" stroke='red' strokeWidth="1px" />
             </svg>
@@ -116,11 +117,17 @@ const TimelineBranchPoint = ({ eventData }) => {
                     </>
                 }
             >
-                <g stroke="white" stroke-width="2" fill='white'>
-                    <circle id="pointA" className='timelinePoint' cx={timelineHStartLocation} cy={timelineVStartLocation} r="1" />
+                <g stroke={eventData.isNexusEvent ? 'orange' : 'white'} stroke-width="2" fill={eventData.isNexusEvent ? 'orange' : 'white'}>
+                    <circle id="pointA" className='timelinePoint' cx={eventData.timelinePoint} cy={timelineVStartLocation} r="0.5" />
                 </g>
             </HtmlTooltip>
-            <path className="curve" d={`M${timelineHStartLocation},${timelineVStartLocation} Q${controlHPoint},${controlVPoint} ${timelineHEndLocation},70`} stroke="orange" strokeWidth="1px" stroke-linecap="round" fill="none" />
+            {eventData.isNexusEvent ?
+                <path className="curve" d={`M${eventData.timelinePoint},${timelineVStartLocation} Q${controlHPoint},${controlVPoint} ${timelineHEndLocation},70`} stroke="orange" strokeWidth="1px" stroke-linecap="round" fill="none" />
+
+                :
+                
+                <></>
+            }
 
         </>
     );
