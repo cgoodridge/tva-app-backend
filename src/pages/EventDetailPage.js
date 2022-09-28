@@ -15,6 +15,7 @@ const EventDetailPage = ({ match }) => {
     const location = useLocation();
 
     const code = location.state.eventData.code;
+    console.log(location.state.eventData[0].name);
 
     const [eventInfo, setEventInfo] = useState({ code: '', date: '', pageTitle: '', titleImg: '', introText: '', changedText: '', extraText: '', originalText: '', scenarioText: '', bodyImg: '', notableChanges: [] });
 

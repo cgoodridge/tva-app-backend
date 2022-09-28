@@ -22,7 +22,7 @@ const columns = [
         label: 'Release Date',
         type: 'date',
         minWidth: 100,
-        format: (value) => moment(value).format("MMM-DD-YYYY"),
+        format: (value) => moment(value.toDate()).format("MMM-DD-YYYY"),
     },
     {
         id: 'dateTime',
@@ -44,12 +44,9 @@ const columns = [
 ];
 
 
-const TimelineEventList = ({ timelineEvents }) => (
+const TimelineEventList = ({ timelineEvents, nexusEvents }) => (
     <>
 
-        {
-            console.log(timelineEvents)
-        }
         <TableContainer className="tableContainer">
             <Table stickyHeader aria-label="sticky table">
                 <TableHead >
@@ -70,7 +67,7 @@ const TimelineEventList = ({ timelineEvents }) => (
                 </TableHead>
                 <TableBody>
                     {timelineEvents.map((row, key) => {
-                        console.log(moment(row.releaseDate).format("MMM-DD-YYYY"));
+
                         return (
                             <TableRow hover tabIndex={-1} key={key}>
                                 {columns.map((column, key) => {
@@ -82,9 +79,14 @@ const TimelineEventList = ({ timelineEvents }) => (
                                     );
                                 })}
                                 <TableCell>
+                                    <Link key={key} to={`/event/${row['name']}`} state={{ eventData: timelineEvents }}>
+                                        <Button variant="outlined" size="small" color="secondary">
+                                            Prime Event
+                                        </Button>
+                                    </Link>
                                     <Link key={key} to={`/event/${row['code']}`} state={{ eventData: row }}>
                                         <Button variant="outlined" size="small" color="primary">
-                                            View Event
+                                            Nexus Event
                                         </Button>
                                     </Link>
                                 </TableCell>

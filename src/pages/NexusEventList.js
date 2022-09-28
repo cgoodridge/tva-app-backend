@@ -83,15 +83,7 @@ const NexusEventListPage = () => {
                 </Grid>
             </Container>
 
-            {/* <div className="sacredTimeline">
-            <video autoPlay loop muted>
-                <source src="./video/sacred_timeline.mp4" type="video/mp4"></source>
-            </video>
-        </div> */}
-
-            {/* <canvas ref={canvas}></canvas> */}
-
-            <SacredTimeline nexusEvents={nexusEvents} />
+            <SacredTimeline timelineEvents={timelineEvents} />
 
             <EventTabs nexusEvents={nexusEvents} timelineEvents={timelineEvents} />
         </>
@@ -120,7 +112,7 @@ const EventTabs = ({ nexusEvents, timelineEvents }) => {
                 <EventList nexusEvents={nexusEvents} />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <TimelineEventList timelineEvents={timelineEvents}/>
+                <TimelineEventList timelineEvents={timelineEvents} nexusEvents={nexusEvents} />
             </TabPanel>
 
         </Box>

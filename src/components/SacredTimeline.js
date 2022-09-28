@@ -5,9 +5,9 @@ import '../css/sacredTimeline.css';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
+import moment from 'moment';
 
-
-const SacredTimeline = ({ nexusEvents }) => {
+const SacredTimeline = ({ timelineEvents }) => {
 
     useEffect(() => {
 
@@ -31,7 +31,7 @@ const SacredTimeline = ({ nexusEvents }) => {
                 <line x1="-200" y1="-95" x2="100" y2="-95" stroke='red' strokeWidth="1px" />
                 <path id="sacredTimeline" d="M -200,-52.5   C0,-52.5   0,-52.5   5000,-52.5" stroke='white' fill='none' strokeWidth="1px" />
 
-                {nexusEvents.sort((objA, objB) => Number(objA.releaseDate) - Number(objB.releaseDate)).map((eventData, key) => (
+                {timelineEvents.sort((objA, objB) => Number(objA.releaseDate) - Number(objB.releaseDate)).map((eventData, key) => (
                     <>
                         <TimelineBranchPoint eventData={eventData} key={key} />
                         {/* <TimelineBranchPoint key={key} /> */}
@@ -110,8 +110,8 @@ const TimelineBranchPoint = ({ eventData }) => {
             <HtmlTooltip
                 title={
                     <>
-                        <Typography variant="h6" gutterBottom component="div" color="inherit">{eventData.eventTitle}</Typography>
-                        <Typography variant="subtitle1" gutterBottom component="div" color="inherit">{eventData.introText}</Typography>
+                        <Typography variant="h6" gutterBottom component="div" color="inherit">{eventData.name}</Typography>
+                        <Typography variant="subtitle1" gutterBottom component="div" color="inherit">{moment(eventData.releaseDate.toDate()).format("MMM-DD-YYYY")}</Typography>
 
 
                     </>
@@ -125,7 +125,7 @@ const TimelineBranchPoint = ({ eventData }) => {
                 <path className="curve" d={`M${eventData.timelinePoint},${timelineVStartLocation} Q${controlHPoint},${controlVPoint} ${timelineHEndLocation},70`} stroke="orange" strokeWidth="1px" stroke-linecap="round" fill="none" />
 
                 :
-                
+
                 <></>
             }
 
