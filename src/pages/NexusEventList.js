@@ -83,7 +83,7 @@ const NexusEventListPage = () => {
                 </Grid>
             </Container>
 
-            <SacredTimeline timelineEvents={timelineEvents} />
+            <SacredTimeline timelineEvents={timelineEvents} nexusEvents={nexusEvents}/>
 
             <EventTabs nexusEvents={nexusEvents} timelineEvents={timelineEvents} />
         </>

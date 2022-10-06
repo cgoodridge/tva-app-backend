@@ -15,7 +15,7 @@ const EventDetailPage = ({ match }) => {
     const location = useLocation();
 
     const code = location.state.eventData.code;
-    console.log(location.state.eventData[0].name);
+    // console.log(location.state.eventData);
 
     const [eventInfo, setEventInfo] = useState({ code: '', date: '', pageTitle: '', titleImg: '', introText: '', changedText: '', extraText: '', originalText: '', scenarioText: '', bodyImg: '', notableChanges: [] });
 
@@ -34,12 +34,12 @@ const EventDetailPage = ({ match }) => {
                 <Grid container style={{ paddingTop: '32px', paddingBottom: '32px' }}>
                     <Grid item xs={12} sm={6}>
                         <Typography variant="h5" component="h6" className="pageHeader" style={{ textAlign: 'left' }} gutterBottom>
-                            {eventInfo.pageTitle}
+                            {eventInfo.eventTitle}
                         </Typography>
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <Typography variant="h6" component="h2" className="pageHeader" style={{ textAlign: 'right' }} gutterBottom>
-                            {eventInfo.date === null ? '' : moment(eventInfo.date).format('MMM DD, YYYY')}
+                            {eventInfo.date === null ? '' : moment(eventInfo.date).format('MMM-DD-YYYY')}
                         </Typography>
                     </Grid>
                 </Grid>
@@ -49,10 +49,16 @@ const EventDetailPage = ({ match }) => {
                         <Typography variant="body1" component="h2" className="pageHeader" style={{ textAlign: 'left', lineHeight: '2.0' }} gutterBottom>
                             {eventInfo.introText}
                         </Typography>
-                        <Typography variant="body1" component="h2" className="pageHeader" style={{ textAlign: 'left', lineHeight: '2.0' }} gutterBottom>
-                            {eventInfo.scenarioText} <Typical steps={[eventInfo.originalText, 8000, eventInfo.changedText, 3000]} loop={1} wrapper="span" />
-                            {eventInfo.extraText === "" ? console.log("Extra text is empty") : <Typical steps={["", 15000, eventInfo.extraText, 5000]} loop={1} wrapper="span" />}
-                        </Typography>
+                        {eventInfo.scenarioText === "" ? <></>
+
+                            :
+
+                            <Typography variant="body1" component="h2" className="pageHeader" style={{ textAlign: 'left', lineHeight: '2.0' }} gutterBottom>
+                                {eventInfo.scenarioText} <Typical steps={[eventInfo.originalText, 8000, eventInfo.changedText, 3000]} loop={1} wrapper="span" />
+                                {eventInfo.extraText === "" ? console.log("Extra text is empty") : <Typical steps={["", 15000, eventInfo.extraText, 5000]} loop={1} wrapper="span" />}
+                            </Typography>
+                        }
+
                         <Typography variant="body1" component="h2" className="pageHeader" style={{ textAlign: 'left', lineHeight: '2.0' }} gutterBottom>
                             {eventInfo.bodyText}
                         </Typography>

@@ -12,7 +12,7 @@ import moment from 'moment';
 
 const columns = [
     {
-        id: 'name',
+        id: 'pageTitle',
         type: 'string',
         label: 'Name',
         minWidth: 170
@@ -42,6 +42,12 @@ const columns = [
     },
 
 ];
+
+const checkWhiteSpace = (name) => {
+    if (name) {
+        return name.indexOf(' ') >= 0;
+    }
+}
 
 
 const TimelineEventList = ({ timelineEvents, nexusEvents }) => (
@@ -79,12 +85,12 @@ const TimelineEventList = ({ timelineEvents, nexusEvents }) => (
                                     );
                                 })}
                                 <TableCell>
-                                    <Link key={key} to={`/event/${row['name']}`} state={{ eventData: timelineEvents }}>
+                                    <Link key={key} to={checkWhiteSpace(`${row['eventTitle']}`) ? `/event/${row['eventTitle'].replace(/ /g, "_")}` : `/event/${row['eventTitle']}`} state={{ eventData: timelineEvents.find((event) => event.code == `${row['code']}`) }}>
                                         <Button variant="outlined" size="small" color="secondary">
                                             Prime Event
                                         </Button>
                                     </Link>
-                                    <Link key={key} to={`/event/${row['code']}`} state={{ eventData: row }}>
+                                    <Link key={key} to={`/event/${row['code']}`} state={{ eventData: nexusEvents.find((event) => event.code == `${row['code']}`) }}>
                                         <Button variant="outlined" size="small" color="primary">
                                             Nexus Event
                                         </Button>

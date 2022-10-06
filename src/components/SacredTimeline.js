@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import moment from 'moment';
 
-const SacredTimeline = ({ timelineEvents }) => {
+const SacredTimeline = ({ timelineEvents, nexusEvents }) => {
 
     useEffect(() => {
 
@@ -33,7 +33,7 @@ const SacredTimeline = ({ timelineEvents }) => {
 
                 {timelineEvents.sort((objA, objB) => Number(objA.releaseDate) - Number(objB.releaseDate)).map((eventData, key) => (
                     <>
-                        <TimelineBranchPoint eventData={eventData} key={key} />
+                        <TimelineBranchPoint eventData={eventData} nexusData={nexusEvents.find((event) => event.code == eventData.code)} key={key} />
                         {/* <TimelineBranchPoint key={key} /> */}
                     </>
                 ))}
@@ -58,8 +58,22 @@ const HtmlTooltip = styled(({ className, ...props }) => (
     },
 }));
 
-const TimelineBranchPoint = ({ eventData }) => {
+const LightTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+        backgroundColor: theme.palette.common.white,
+        color: 'rgba(0, 0, 0, 0.87)',
+        boxShadow: theme.shadows[1],
+        fontSize: 11,
+    },
+}));
+
+
+const TimelineBranchPoint = ({ eventData, nexusData }) => {
     /// Buckle up buttercup this is gonna be complex.
+
+    console.log(nexusData);
 
     // Number of branch points on the timeline.
     const [branchPoints] = useState([1, 2, 3, 4, 5]);
@@ -107,22 +121,54 @@ const TimelineBranchPoint = ({ eventData }) => {
         <>
 
 
-            <HtmlTooltip
-                title={
-                    <>
-                        <Typography variant="h6" gutterBottom component="div" color="inherit">{eventData.name}</Typography>
-                        <Typography variant="subtitle1" gutterBottom component="div" color="inherit">{moment(eventData.releaseDate.toDate()).format("MMM-DD-YYYY")}</Typography>
 
-
-                    </>
-                }
-            >
-                <g stroke={eventData.isNexusEvent ? 'orange' : 'white'} stroke-width="2" fill={eventData.isNexusEvent ? 'orange' : 'white'}>
-                    <circle id="pointA" className='timelinePoint' cx={eventData.timelinePoint} cy={timelineVStartLocation} r="0.5" />
-                </g>
-            </HtmlTooltip>
             {eventData.isNexusEvent ?
-                <path className="curve" d={`M${eventData.timelinePoint},${timelineVStartLocation} Q${controlHPoint},${controlVPoint} ${timelineHEndLocation},70`} stroke="orange" strokeWidth="1px" stroke-linecap="round" fill="none" />
+
+                <g stroke='orange' stroke-width="2" fill='orange' >
+
+                    <HtmlTooltip
+                        title={
+                            <>
+                                <Typography variant="h6" gutterBottom component="div" color="inherit">{eventData.eventTitle}</Typography>
+                                <Typography variant="subtitle1" gutterBottom component="div" color="inherit">{moment(eventData.releaseDate.toDate()).format("MMM-DD-YYYY")}</Typography>
+                            </>
+                        }
+                    >
+                        <circle id="timelinePoint" className='timelinePoint' cx={eventData.timelinePoint} cy={timelineVStartLocation} r="0.5" />
+                    </HtmlTooltip>
+                    <LightTooltip
+                        title={
+                            <>
+                                <Typography variant="h6" gutterBottom component="div" color="inherit">{nexusData.eventTitle}</Typography>
+                                <Typography variant="subtitle1" gutterBottom component="div" color="inherit">{moment(nexusData.date.toDate()).format("MMM-DD-YYYY")}</Typography>
+                            </>
+                        }
+                    >
+                        <circle id="nexusPoint" className='timelinePoint' cx={parseInt(eventData.timelinePoint) + 20} cy={timelineVStartLocation + (-30)} r="0.5" />
+
+                    </LightTooltip>
+                </g>
+
+                :
+                <g stroke='white' stroke-width="2" fill='white' >
+
+                    <HtmlTooltip
+                        title={
+                            <>
+                                <Typography variant="h6" gutterBottom component="div" color="inherit">{eventData.eventTitle}</Typography>
+                                <Typography variant="subtitle1" gutterBottom component="div" color="inherit">{moment(eventData.releaseDate.toDate()).format("MMM-DD-YYYY")}</Typography>
+                            </>
+                        }
+                    >
+                        <circle id="pointA" className='timelinePoint' cx={eventData.timelinePoint} cy={timelineVStartLocation} r="0.5" />
+                    </HtmlTooltip>
+
+                </g>
+            }
+
+
+            {eventData.isNexusEvent ?
+                <path className="curve" d={`M${eventData.timelinePoint},${timelineVStartLocation} Q${parseInt(eventData.timelinePoint) + 10},${timelineVStartLocation} ${parseInt(eventData.timelinePoint) + 20},${timelineVStartLocation + (-30)}`} stroke="orange" strokeWidth="1px" stroke-linecap="round" fill="none" />
 
                 :
 
