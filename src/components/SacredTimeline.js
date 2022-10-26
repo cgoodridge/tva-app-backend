@@ -15,21 +15,22 @@ const SacredTimeline = ({ timelineEvents, nexusEvents }) => {
             targets: '#timeline .curve',
             strokeDashoffset: [anime.setDashoffset, 2],
             easing: 'linear',
-            duration: 50000,
+            duration: 5000,
             delay: function (el, i) { return i * 250 },
             direction: 'normal',
             loop: false
         });
-    })
+
+    });
 
     const [loops] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
     return (
 
-        <Container sx={{ display: 'flex', alignItems: 'center', height: '100%', overflowX: "scroll" }}>
-            <svg id="timeline" height="500px" width="100%" viewBox='-100 -100 100 100'>
-                <line x1="-200" y1="-95" x2="100" y2="-95" stroke='red' strokeWidth="1px" />
-                <path id="sacredTimeline" d="M -200,-52.5   C0,-52.5   0,-52.5   5000,-52.5" stroke='white' fill='none' strokeWidth="1px" />
+        <Container id="timelineContainer" sx={{ display: 'flex', alignItems: 'center', height: '100%', width: '1000px' }}>
+            <svg id="timeline" height="500" width="5000px" viewBox='0 -250 1500 500'>
+                <line x1="-200" y1="-300" x2="5000" y2="-300" stroke='red' strokeWidth="3px" />
+                <path id="sacredTimeline" d="M -200, 0   C0,0  0,0   5000,0" stroke='white' fill='none' strokeWidth="3px" />
 
                 {timelineEvents.sort((objA, objB) => Number(objA.releaseDate) - Number(objB.releaseDate)).map((eventData, key) => (
                     <>
@@ -38,7 +39,7 @@ const SacredTimeline = ({ timelineEvents, nexusEvents }) => {
                     </>
                 ))}
 
-                <line x1="-200" y1="-10" x2="100" y2="-10" stroke='red' strokeWidth="1px" />
+                <line x1="-100" y1="300" x2="5000" y2="300" stroke='red' strokeWidth="3px" />
             </svg>
         </Container>
 
@@ -71,9 +72,46 @@ const LightTooltip = styled(({ className, ...props }) => (
 
 
 const TimelineBranchPoint = ({ eventData, nexusData }) => {
-    /// Buckle up buttercup this is gonna be complex.
 
-    console.log(nexusData);
+    /// Buckle up buttercup, this is gonna be complex.
+    const mcuStartPoint = moment("2008-05-14 00:00:00");
+
+    // Calculate event position on timeline based on release date, relative to the start of the MCU
+    const calculateEventPosition = (releaseDate, previousEvent) => {
+        // console.log(parseInt(moment(eventData.releaseDate.toDate()).format("Y")));
+
+        if (previousEvent === "") {
+            let initialPoint = 10;
+            return initialPoint;
+            // let diff = mcuStartPoint.diff(moment(releaseDate?.toDate()), 'days') * (-1);
+            // if (diff < 30) {
+            //     console.log("First Diff " + diff);
+            //     // console.log("First Event " + (initialPoint * 1).toString());
+            //     return initialPoint * 1;
+            // } else if (diff >= 30) {
+            //     console.log("Second Diff " + diff);
+            //     // console.log("Second Event " + (initialPoint * 10).toString());
+            //     return initialPoint * 10;
+            // }
+        } else {
+            let initialPoint = 10;
+
+            let diff = moment(previousEvent?.toDate()).diff(moment(releaseDate?.toDate()), 'days') * (-1);
+            if (diff < 30) {
+                console.log("First Diff " + diff);
+                return initialPoint * 1;
+            } else if (diff >= 30) {
+                console.log("Second Diff " + diff);
+                // In this approach we're assigning the event a place on the timeline based on the difference in days from the previous event
+                // TODO - Expose multiplier value to give more find control of timeline scale
+                return diff * 5;
+            }
+        }
+
+
+
+    }
+
 
     // Number of branch points on the timeline.
     const [branchPoints] = useState([1, 2, 3, 4, 5]);
@@ -85,7 +123,7 @@ const TimelineBranchPoint = ({ eventData, nexusData }) => {
     // This is point A-Horizontal, where the curve starts on the X or Horizontal axis. 
     const [timelineHStartLocation, setTimelineHStartLocation] = useState(0);
     // This is point A-Vertical, where the curve starts on the Y or Vertical axis
-    const [timelineVStartLocation, setTimelineVStartLocation] = useState(-52.5);
+    const [timelineVStartLocation, setTimelineVStartLocation] = useState(0);
 
     // This is point B-Horizontal, where the midpoint of the exist on the X or Horizontal axis. This is the bending point for the curve.
     const [arcHorizontalNum, setArcHorizontalNum] = useState(0);
@@ -99,7 +137,6 @@ const TimelineBranchPoint = ({ eventData, nexusData }) => {
 
     const randomNumberInRange = (min, max) => {
         // Get number between min (inclusive) and max (inclusive)
-        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     /// Makes sure all variables for the horizonal axis are relative to each other to avoid strange behaviour on the timeline
@@ -120,8 +157,6 @@ const TimelineBranchPoint = ({ eventData, nexusData }) => {
     return (
         <>
 
-
-
             {eventData.isNexusEvent ?
 
                 <g stroke='orange' stroke-width="2" fill='orange' >
@@ -134,7 +169,7 @@ const TimelineBranchPoint = ({ eventData, nexusData }) => {
                             </>
                         }
                     >
-                        <circle id="timelinePoint" className='timelinePoint' cx={eventData.timelinePoint} cy={timelineVStartLocation} r="0.5" />
+                        <circle id="timelinePoint" className='timelinePoint' cx={calculateEventPosition(eventData.releaseDate, eventData.previousEvent)} cy={timelineVStartLocation} r="8" />
                     </HtmlTooltip>
                     <LightTooltip
                         title={
@@ -144,13 +179,14 @@ const TimelineBranchPoint = ({ eventData, nexusData }) => {
                             </>
                         }
                     >
-                        <circle id="nexusPoint" className='timelinePoint' cx={parseInt(eventData.timelinePoint) + 20} cy={timelineVStartLocation + (-30)} r="0.5" />
-
+                        <circle id="nexusPoint" className='timelinePoint' cx={calculateEventPosition(eventData.releaseDate, eventData.previousEvent) + 125} cy={timelineVStartLocation + (-150)} r="8" />
                     </LightTooltip>
+
                 </g>
 
                 :
-                <g stroke='white' stroke-width="2" fill='white' >
+
+                <g stroke='white' stroke-width="8" fill='white' >
 
                     <HtmlTooltip
                         title={
@@ -160,15 +196,14 @@ const TimelineBranchPoint = ({ eventData, nexusData }) => {
                             </>
                         }
                     >
-                        <circle id="pointA" className='timelinePoint' cx={eventData.timelinePoint} cy={timelineVStartLocation} r="0.5" />
+                        <circle id="pointA" className='timelinePoint' cx={calculateEventPosition(eventData.releaseDate, eventData.previousEvent)} cy={timelineVStartLocation} r="8" />
                     </HtmlTooltip>
 
                 </g>
             }
 
-
             {eventData.isNexusEvent ?
-                <path className="curve" d={`M${eventData.timelinePoint},${timelineVStartLocation} Q${parseInt(eventData.timelinePoint) + 10},${timelineVStartLocation} ${parseInt(eventData.timelinePoint) + 20},${timelineVStartLocation + (-30)}`} stroke="orange" strokeWidth="1px" stroke-linecap="round" fill="none" />
+                <path className="curve" d={`M${eventData.timelinePoint},${timelineVStartLocation} Q${calculateEventPosition(eventData.releaseDate) + 100},${timelineVStartLocation} ${parseInt(eventData.timelinePoint) + 125},${timelineVStartLocation + (-155)}`} stroke="orange" strokeWidth="5px" stroke-linecap="round" fill="none" />
 
                 :
 

@@ -1,7 +1,13 @@
 #sacredTimeline {
     z-index: 99;
     /* pointer-events: none; */
-    overflow-x: scroll;
+    /* overflow-x: scroll; */
+
+}
+
+#timelineContainer {
+    width: 100%;
+    overflow-x: scroll !important;
 }
 
 .timelinePoint {
@@ -12,10 +18,12 @@
     margin: 0 auto;
     display: block;
     pointer-events: none;
+    overflow-x: scroll;
+    width: 3000px;
 }
 
 .timelinePoint:hover {
-    stroke-width: 4px;
+    stroke-width: 8px;
 }
 
 /* .curve:hover {

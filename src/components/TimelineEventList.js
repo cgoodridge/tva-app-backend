@@ -49,7 +49,6 @@ const checkWhiteSpace = (name) => {
     }
 }
 
-
 const TimelineEventList = ({ timelineEvents, nexusEvents }) => (
     <>
 
@@ -73,7 +72,6 @@ const TimelineEventList = ({ timelineEvents, nexusEvents }) => (
                 </TableHead>
                 <TableBody>
                     {timelineEvents.map((row, key) => {
-
                         return (
                             <TableRow hover tabIndex={-1} key={key}>
                                 {columns.map((column, key) => {
